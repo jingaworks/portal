@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.user')
 @section('content')
 
 <div class="card">
@@ -7,7 +7,7 @@
     </div>
 
     <div class="card-body">
-        <form method="POST" action="{{ route("admin.profiles.store") }}" enctype="multipart/form-data">
+        <form method="POST" action="{{ route("user.profiles.store") }}" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
                 <label class="required" for="phone">{{ trans('cruds.profile.fields.phone') }}</label>
@@ -74,7 +74,7 @@
 @section('scripts')
 <script>
     Dropzone.options.avatarDropzone = {
-    url: '{{ route('admin.profiles.storeMedia') }}',
+    url: '{{ route('user.profiles.storeMedia') }}',
     maxFilesize: 2, // MB
     acceptedFiles: '.jpeg,.jpg,.png,.gif',
     maxFiles: 1,

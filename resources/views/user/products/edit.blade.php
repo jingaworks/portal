@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.user')
 @section('content')
 
 <div class="card">
@@ -7,7 +7,7 @@
     </div>
 
     <div class="card-body">
-        <form method="POST" action="{{ route("admin.products.update", [$product->id]) }}" enctype="multipart/form-data">
+        <form method="POST" action="{{ route("user.products.update", [$product->id]) }}" enctype="multipart/form-data">
             @method('PUT')
             @csrf
             <div class="form-group">
@@ -116,7 +116,7 @@
 <script>
     var uploadedImagesMap = {}
 Dropzone.options.imagesDropzone = {
-    url: '{{ route('admin.products.storeMedia') }}',
+    url: '{{ route('user.products.storeMedia') }}',
     maxFilesize: 2, // MB
     acceptedFiles: '.jpeg,.jpg,.png,.gif',
     addRemoveLinks: true,

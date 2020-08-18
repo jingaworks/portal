@@ -68,6 +68,30 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     // Settings
     Route::resource('settings', 'SettingsController', ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
 });
+
+Route::group(['prefix' => 'user', 'as' => 'user.', 'namespace' => 'User', 'middleware' => ['auth']], function () {
+    Route::get('/', 'HomeController@index')->name('home');
+
+    // Profiles
+    Route::post('profiles/media', 'ProfileController@storeMedia')->name('profiles.storeMedia');
+    Route::post('profiles/ckmedia', 'ProfileController@storeCKEditorImages')->name('profiles.storeCKEditorImages');
+    Route::resource('profiles', 'ProfileController', ['except' => ['destroy']]);
+
+    // Certificates
+    Route::post('certificates/media', 'CertificateController@storeMedia')->name('certificates.storeMedia');
+    Route::post('certificates/ckmedia', 'CertificateController@storeCKEditorImages')->name('certificates.storeCKEditorImages');
+    Route::resource('certificates', 'CertificateController', ['except' => ['destroy']]);
+
+    // Products
+    Route::delete('products/destroy', 'ProductController@massDestroy')->name('products.massDestroy');
+    Route::post('products/media', 'ProductController@storeMedia')->name('products.storeMedia');
+    Route::post('products/ckmedia', 'ProductController@storeCKEditorImages')->name('products.storeCKEditorImages');
+    Route::resource('products', 'ProductController');
+
+    // Settings
+    Route::resource('settings', 'SettingsController', ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
+});
+
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth']], function () {
 // Change password
     if (file_exists(app_path('Http/Controllers/Auth/ChangePasswordController.php'))) {

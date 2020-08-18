@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.user')
 @section('content')
 
 <div class="card">
@@ -9,7 +9,7 @@
     <div class="card-body">
         <div class="form-group">
             <div class="form-group">
-                <a class="btn btn-default" href="{{ route('admin.certificates.index') }}">
+                <a class="btn btn-default" href="{{ route('user.certificates.index') }}">
                     {{ trans('global.back_to_list') }}
                 </a>
             </div>
@@ -70,7 +70,7 @@
                 </tbody>
             </table>
             <div class="form-group">
-                <a class="btn btn-default" href="{{ route('admin.certificates.index') }}">
+                <a class="btn btn-default" href="{{ route('user.certificates.index') }}">
                     {{ trans('global.back_to_list') }}
                 </a>
             </div>

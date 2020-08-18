@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.user')
 @section('content')
 
 <div class="card">
@@ -7,7 +7,7 @@
     </div>
 
     <div class="card-body">
-        <form method="POST" action="{{ route("admin.certificates.store") }}" enctype="multipart/form-data">
+        <form method="POST" action="{{ route("user.certificates.store") }}" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
                 <label class="required" for="name">{{ trans('cruds.certificate.fields.name') }}</label>
@@ -85,7 +85,7 @@
 <script>
     var uploadedValidationImagesMap = {}
 Dropzone.options.validationImagesDropzone = {
-    url: '{{ route('admin.certificates.storeMedia') }}',
+    url: '{{ route('user.certificates.storeMedia') }}',
     maxFilesize: 2, // MB
     acceptedFiles: '.jpeg,.jpg,.png,.gif',
     addRemoveLinks: true,

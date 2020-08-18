@@ -3,7 +3,7 @@
 @can('product_create')
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">
-            <a class="btn btn-success" href="{{ route('admin.products.create') }}">
+            <a class="btn btn-success" href="{{ route('user.products.create') }}">
                 {{ trans('global.add') }} {{ trans('cruds.product.title_singular') }}
             </a>
         </div>
@@ -19,7 +19,7 @@
             <thead>
                 <tr>
                     <th width="10">
-
+                        &nbsp;
                     </th>
                     <th>
                         {{ trans('cruds.product.fields.id') }}
@@ -27,56 +27,26 @@
                     <th>
                         {{ trans('cruds.product.fields.title') }}
                     </th>
-                    @can('user_management_access')
-                    <th>
-                        {{ trans('cruds.product.fields.region') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.product.fields.place') }}
-                    </th>
-                    @endcan
                     <th>
                         {{ trans('cruds.product.fields.category') }}
                     </th>
                     <th>
                         {{ trans('cruds.product.fields.subcategory') }}
                     </th>
-                    @can('user_management_access')
-                    <th>
-                        {{ trans('cruds.product.fields.created_by') }}
-                    </th>
-                    @endcan
                     <th>
                         &nbsp;
                     </th>
                 </tr>
                 <tr>
                     <td>
+                        &nbsp;
                     </td>
                     <td>
-                        <!-- <input class="search" type="text" placeholder="{{ trans('global.search') }}"> -->
+                        &nbsp;
                     </td>
                     <td>
                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                     </td>
-                    @can('user_management_access')
-                    <td>
-                        <select class="search">
-                            <option value>{{ trans('global.all') }}</option>
-                            @foreach($regions as $key => $item)
-                                <option value="{{ $item->denj }}">{{ $item->denj }}</option>
-                            @endforeach
-                        </select>
-                    </td>
-                    <td>
-                        <select class="search">
-                            <option value>{{ trans('global.all') }}</option>
-                            @foreach($places as $key => $item)
-                                <option value="{{ $item->denloc }}">{{ $item->denloc }}</option>
-                            @endforeach
-                        </select>
-                    </td>
-                    @endcan
                     <td>
                         <select class="search">
                             <option value>{{ trans('global.all') }}</option>
@@ -93,17 +63,8 @@
                             @endforeach
                         </select>
                     </td>
-                    @can('user_management_access')
                     <td>
-                        <select class="search">
-                            <option value>{{ trans('global.all') }}</option>
-                            @foreach($users as $key => $item)
-                                <option value="{{ $item->name }}">{{ $item->name }}</option>
-                            @endforeach
-                        </select>
-                    </td>
-                    @endcan
-                    <td>
+                        &nbsp;
                     </td>
                 </tr>
             </thead>
@@ -119,7 +80,6 @@
 <script>
     $(function () {
   let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
-@can('product_delete')
   let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
   let deleteButton = {
     text: deleteButtonTrans,
@@ -147,7 +107,6 @@
     }
   }
   dtButtons.push(deleteButton)
-@endcan
 
   let dtOverrideGlobals = {
     buttons: dtButtons,
@@ -155,20 +114,13 @@
     serverSide: true,
     retrieve: true,
     aaSorting: [],
-    ajax: "{{ route('admin.products.index') }}",
+    ajax: "{{ route('user.products.index') }}",
     columns: [
         { data: 'placeholder', name: 'placeholder' },
         { data: 'id', name: 'id' },
         { data: 'title', name: 'title' },
-        @can('user_management_access')
-        { data: 'region_denj', name: 'region.denj' },
-        { data: 'place_denloc', name: 'place.denloc' },
-        @endcan
         { data: 'category_name', name: 'category.name' },
         { data: 'subcategory_name', name: 'subcategory.name' },
-        @can('user_management_access')
-        { data: 'created_by_name', name: 'created_by.name' },
-        @endcan
         { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,
