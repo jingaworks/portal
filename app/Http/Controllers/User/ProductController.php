@@ -29,10 +29,9 @@ class ProductController extends Controller
         abort_if(Gate::denies('product_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = Product::with(['region', 'place', 'category', 'subcategory', 'profile', 'created_by'])->select(sprintf('%s.*', (new Product)->table));
+            $query = Product::with(['category', 'subcategory'])->select(sprintf('%s.*', (new Product)->table));
             $table = Datatables::of($query);
 
-            $table->addColumn('placeholder', '&nbsp;');
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
@@ -50,18 +49,8 @@ class ProductController extends Controller
                 ));
             });
 
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : "";
-            });
             $table->editColumn('title', function ($row) {
                 return $row->title ? $row->title : "";
-            });
-            $table->addColumn('region_denj', function ($row) {
-                return $row->region ? $row->region->denj : '';
-            });
-
-            $table->addColumn('place_denloc', function ($row) {
-                return $row->place ? $row->place->denloc : '';
             });
 
             $table->addColumn('category_name', function ($row) {
@@ -72,23 +61,15 @@ class ProductController extends Controller
                 return $row->subcategory ? $row->subcategory->name : '';
             });
 
-            $table->addColumn('created_by_name', function ($row) {
-                return $row->created_by ? $row->created_by->name : '';
-            });
-
-            $table->rawColumns(['actions', 'placeholder', 'region', 'place', 'category', 'subcategory', 'created_by']);
+            $table->rawColumns(['actions', 'category', 'subcategory']);
 
             return $table->make(true);
         }
 
-        $regions       = Region::has('regionProducts')->get();
-        $places        = Place::has('placeProducts')->whereNotIn('codp', [0])->orderBy('denloc')->get();
         $categories    = Category::has('categoryProducts')->get();
         $subcategories = Subcategory::has('subcategoryProducts')->get();
-        $profiles      = Profile::has('profileProducts')->get();
-        $users         = User::has('createdByProducts')->get();
 
-        return view('user.products.index', compact('regions', 'places', 'categories', 'subcategories', 'profiles', 'users'));
+        return view('user.products.index', compact('categories', 'subcategories'));
     }
 
     public function create()

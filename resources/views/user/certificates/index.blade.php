@@ -18,12 +18,6 @@
         <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-Certificate">
             <thead>
                 <tr>
-                    <th width="10">
-
-                    </th>
-                    <th>
-                        {{ trans('cruds.certificate.fields.id') }}
-                    </th>
                     <th>
                         {{ trans('cruds.certificate.fields.name') }}
                     </th>
@@ -45,8 +39,6 @@
     </div>
 </div>
 
-
-
 @endsection
 @section('scripts')
 @parent
@@ -62,8 +54,6 @@
     aaSorting: [],
     ajax: "{{ route('user.certificates.index') }}",
     columns: [
-        { data: 'placeholder', name: 'placeholder' },
-        { data: 'id', name: 'id' },
         { data: 'name', name: 'name' },
         { data: 'serie', name: 'serie' },
         { data: 'region_denj', name: 'region.denj' },
@@ -71,14 +61,9 @@
         { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,
-    order: [[ 1, 'desc' ]],
     pageLength: 25,
   };
     let table = $('.datatable-Certificate').DataTable(dtOverrideGlobals);
-    $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
-        $($.fn.dataTable.tables(true)).DataTable()
-            .columns.adjust();
-    });
 });
 
 </script>

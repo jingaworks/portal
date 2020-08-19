@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.user')
 @section('content')
 @can('product_create')
     <div style="margin-bottom: 10px;" class="row">
@@ -18,12 +18,6 @@
         <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-Product">
             <thead>
                 <tr>
-                    <th width="10">
-                        &nbsp;
-                    </th>
-                    <th>
-                        {{ trans('cruds.product.fields.id') }}
-                    </th>
                     <th>
                         {{ trans('cruds.product.fields.title') }}
                     </th>
@@ -38,12 +32,6 @@
                     </th>
                 </tr>
                 <tr>
-                    <td>
-                        &nbsp;
-                    </td>
-                    <td>
-                        &nbsp;
-                    </td>
                     <td>
                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                     </td>
@@ -72,42 +60,12 @@
     </div>
 </div>
 
-
-
 @endsection
 @section('scripts')
 @parent
 <script>
     $(function () {
   let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
-  let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
-  let deleteButton = {
-    text: deleteButtonTrans,
-    url: "{{ route('admin.products.massDestroy') }}",
-    className: 'btn-danger',
-    action: function (e, dt, node, config) {
-      var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
-          return entry.id
-      });
-
-      if (ids.length === 0) {
-        alert('{{ trans('global.datatables.zero_selected') }}')
-
-        return
-      }
-
-      if (confirm('{{ trans('global.areYouSure') }}')) {
-        $.ajax({
-          headers: {'x-csrf-token': _token},
-          method: 'POST',
-          url: config.url,
-          data: { ids: ids, _method: 'DELETE' }})
-          .done(function () { location.reload() })
-      }
-    }
-  }
-  dtButtons.push(deleteButton)
-
   let dtOverrideGlobals = {
     buttons: dtButtons,
     processing: true,
@@ -116,8 +74,6 @@
     aaSorting: [],
     ajax: "{{ route('user.products.index') }}",
     columns: [
-        { data: 'placeholder', name: 'placeholder' },
-        { data: 'id', name: 'id' },
         { data: 'title', name: 'title' },
         { data: 'category_name', name: 'category.name' },
         { data: 'subcategory_name', name: 'subcategory.name' },

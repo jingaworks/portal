@@ -27,10 +27,9 @@ class CertificateController extends Controller
         abort_if(Gate::denies('certificate_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = Certificate::with(['region', 'place', 'profile', 'created_by'])->select(sprintf('%s.*', (new Certificate)->table));
+            $query = Certificate::with(['region', 'place'])->select(sprintf('%s.*', (new Certificate)->table));
             $table = Datatables::of($query);
 
-            $table->addColumn('placeholder', '&nbsp;');
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
@@ -48,9 +47,6 @@ class CertificateController extends Controller
                 ));
             });
 
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : "";
-            });
             $table->editColumn('name', function ($row) {
                 return $row->name ? $row->name : "";
             });
@@ -65,21 +61,15 @@ class CertificateController extends Controller
                 return $row->place ? $row->place->denloc : '';
             });
 
-            $table->addColumn('created_by_name', function ($row) {
-                return $row->created_by ? $row->created_by->name : '';
-            });
-
-            $table->rawColumns(['actions', 'placeholder', 'region', 'place', 'created_by']);
+            $table->rawColumns(['actions', 'region', 'place']);
 
             return $table->make(true);
         }
 
         $regions  = Region::has('regionCertificates')->get();
         $places   = Place::has('placeCertificates')->whereNotIn('codp', [0])->get();
-        $profiles = Profile::has('profileCertificates')->get();
-        $users    = User::has('createdByCertificates')->get();
 
-        return view('user.certificates.index', compact('regions', 'places', 'profiles', 'users'));
+        return view('user.certificates.index', compact('regions', 'places'));
     }
 
     public function create()

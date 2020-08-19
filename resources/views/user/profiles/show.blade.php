@@ -17,14 +17,6 @@
                 <tbody>
                     <tr>
                         <th>
-                            {{ trans('cruds.profile.fields.id') }}
-                        </th>
-                        <td>
-                            {{ $profile->id }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
                             {{ trans('cruds.profile.fields.phone') }}
                         </th>
                         <td>

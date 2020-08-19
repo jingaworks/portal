@@ -17,14 +17,6 @@
                 <tbody>
                     <tr>
                         <th>
-                            {{ trans('cruds.certificate.fields.id') }}
-                        </th>
-                        <td>
-                            {{ $certificate->id }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
                             {{ trans('cruds.certificate.fields.name') }}
                         </th>
                         <td>

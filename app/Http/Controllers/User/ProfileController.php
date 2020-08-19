@@ -26,10 +26,9 @@ class ProfileController extends Controller
         abort_if(Gate::denies('profile_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = Profile::with(['place', 'region', 'created_by'])->select(sprintf('%s.*', (new Profile)->table));
+            $query = Profile::with(['place', 'region'])->select(sprintf('%s.*', (new Profile)->table));
             $table = Datatables::of($query);
 
-            $table->addColumn('placeholder', '&nbsp;');
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
@@ -47,9 +46,6 @@ class ProfileController extends Controller
                 ));
             });
 
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : "";
-            });
             $table->editColumn('phone', function ($row) {
                 return $row->phone ? $row->phone : "";
             });
@@ -68,9 +64,8 @@ class ProfileController extends Controller
 
         $regions = Region::has('regionProfiles')->get();
         $places  = Place::has('placeProfiles')->whereNotIn('codp', [0])->get();
-        $users   = User::has('createdByProfiles')->get();
 
-        return view('user.profiles.index', compact( 'regions', 'places','users'));
+        return view('user.profiles.index', compact( 'regions', 'places'));
     }
 
     public function create()

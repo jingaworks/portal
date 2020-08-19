@@ -119,3 +119,13 @@ table.dataTable thead .sorting_desc {
 .c-sidebar-brand .c-sidebar-brand-full:hover {
     color: inherit;
 }
+
+div.dataTables_wrapper div.dataTables_length select {
+    width: 100px !important ;
+    display: inline-block;
+}
+div.dataTables_wrapper div.dataTables_filter input {
+    margin-left: 0.5em;
+    display: inline-block;
+    width: 300px;
+}
