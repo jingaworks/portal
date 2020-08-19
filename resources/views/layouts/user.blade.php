@@ -122,10 +122,20 @@
     language: {
       url: languages['{{ app()->getLocale() }}']
     },
+    columnDefs: [{
+        orderable: false,
+        searchable: false,
+        targets: -1
+    }],
+    select: {
+      style:    'multi+shift',
+      selector: 'td:first-child'
+    },
     order: [],
     scrollX: true,
     pageLength: 100,
-    dom: 'lBfrtip<"actions">'
+    dom: 'lBfrtip<"actions">',
+    buttons: []
   });
 
   $.fn.dataTable.ext.classes.sPageButton = '';
